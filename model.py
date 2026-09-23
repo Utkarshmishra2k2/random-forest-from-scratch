@@ -19,8 +19,18 @@ def impurity(labels):
     probabilities = counts / len(labels)
     return 1 - sum(probabilities ** 2)
 
-# Step 2 - split_dataset (not yet solved)
-# TODO: implement
+# Step 2 - split_dataset
+import numpy as np
+
+def split_dataset(features, labels, feature_index, threshold):
+    # TODO: partition rows into left (feature <= threshold) and right (feature > threshold)
+    left = features[:,feature_index] <= threshold
+    right = features[:,feature_index] > threshold
+
+    # : → take all rows
+    # feature_index → take that column
+
+    return features[left],labels[left],features[right],labels[right]
 
 # Step 3 - split_score (not yet solved)
 # TODO: implement
