@@ -97,6 +97,11 @@ def leaf_prediction(labels):
     counts = np.bincount(labels)
     return int(np.argmax(counts))
 
+    # np.bincount(labels) counts each class, and 
+    # np.argmax(counts) returns the class with the 
+    # highest count. int() ensures the output is a 
+    # normal Python integer.
+
 # Step 7 - build_tree (not yet solved)
 # TODO: implement
 
