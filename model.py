@@ -102,8 +102,61 @@ def leaf_prediction(labels):
     # highest count. int() ensures the output is a 
     # normal Python integer.
 
-# Step 7 - build_tree (not yet solved)
-# TODO: implement
+# Step 7 - build_tree
+def build_tree(features, labels, max_depth=10, min_samples_split=2, feature_subset=None, depth=0):
+    # TODO: recursively grow a decision tree, returning a nested dict of leaf/internal nodes.
+    if should_stop(labels,depth,max_depth,min_samples_split):
+        return {
+            "leaf":True,
+            "prediction":leaf_prediction(labels)
+        }
+
+    if feature_subset is None:
+        feature_subset = range(features.shape[1])
+        
+    split = best_split(features,labels,feature_subset)
+
+    if split["feature_index"] is None or split["score"] <= 0:
+        return {
+            "leaf":True,
+            "prediction":leaf_prediction(labels)
+        }
+    feature_index = split["feature_index"]
+    threshold = split["threshold"]
+
+    left_features, left_labels, right_features, right_labels = split_dataset(
+        features,
+        labels,
+        feature_index,
+        threshold
+        )
+
+    left_tree = build_tree(
+        left_features,
+        left_labels,
+        max_depth,
+        min_samples_split,
+        feature_subset,
+        depth + 1
+        )
+
+
+    right_tree = build_tree(
+        right_features,
+        right_labels,
+        max_depth,
+        min_samples_split,
+        feature_subset,
+        depth + 1
+        )
+
+    return {
+        "leaf": False,
+        "feature_index": int(feature_index),
+        "threshold": float(threshold),
+        "left": left_tree,
+        "right": right_tree
+        }
 
 # Step 8 - predict_example_tree (not yet solved)
 # TODO: implement
