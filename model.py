@@ -274,8 +274,18 @@ def train_forest(
 
     return forest
 
-# Step 13 - combine_predictions (not yet solved)
-# TODO: implement
+# Step 13 - combine_predictions
+def combine_predictions(tree_predictions):
+    # TODO: aggregate the per-tree predictions of an ensemble into one prediction per example.
+    final_predictions = []
+
+    # Check predictions for each example
+    for column in tree_predictions.T:
+        classes, counts = np.unique(column, return_counts=True)
+        winner = classes[np.argmax(counts)]
+        final_predictions.append(winner)
+
+    return np.array(final_predictions, dtype=int)
 
 # Step 14 - predict_forest (not yet solved)
 # TODO: implement
